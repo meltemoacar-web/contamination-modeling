@@ -4,7 +4,7 @@ import pandas as pd
 
 df = pd.read_csv("output.txt")
 
-plt.plot(df['time'],df['center'], marker='o')
+plt.plot(df['0'],df['0.0'], marker='o')
 
 plt.title('Center points over time')
 plt.xlabel('Time')

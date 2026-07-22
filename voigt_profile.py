@@ -40,7 +40,7 @@ gamma = 0.2
 
 x = np.linspace(-10, 10, 1000)
 
-y_noise = noise(x,-1,0.1,0.1)
+y_noise = noise(x,-6,0.1,0.1)
 y_noise1 = noise(x,4,0.05,0.5)
 
 

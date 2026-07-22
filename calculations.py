@@ -36,14 +36,19 @@ def find_half(x,y,y_max):
 
     for index, yy in enumerate(y):
         #print(f" delta:{abs(yy - y_max_half)}")
-        if abs(yy - y_max_half) <= 0.001:
+        if abs(yy - y_max_half) <= 0.009:
             half_indices.append(index)
 
-    x_max_half=[]
+    x_values =[]
     for i in  half_indices:
-        x_max_half.append(x[i])
-       
-    print(f"x_max_half:{x_max_half} y_max_half:{y_max_half}")
+        x_values.append(x[i])
 
-    return x_max_half, y_max_half
+    x_max_half_min = x_values[0]
+    x_max_half_max = x_values[-1]     
+        
+    print(f"x_max_half:{x_values} y_max_half:{y_max_half}")
+    
+    x_max_half = (x_max_half_max - x_max_half_min)/2 + x_max_half_min  
+    
+    return x_max_half_min,x_max_half_max, x_max_half,  y_max_half
 

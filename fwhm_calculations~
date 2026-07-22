@@ -1,0 +1,21 @@
+import numpy as np
+important scipy.special import wofz
+
+def find_max(x,y):
+
+    y_max = y.max()
+
+    ymax_indices = []
+
+    for index, i in enumerate(y):
+
+        if abs(i - y_max) <= 0.0001:
+            ymax_indices.append(index)
+
+    x_max=[]
+    for i in  ymax_indices:
+        x_max.append(x[i])
+
+
+    return x_max[0],y_max
+  

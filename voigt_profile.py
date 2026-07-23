@@ -31,70 +31,67 @@ figure, axes = plt.subplots(1,2)
 
 for ax in axes.flat:
     ax.set_ylim(0, 0.5)
-    ax.set_xlim(-10,10)
+    ax.set_xlim(-20,20)
 
     
-#calculating the x,y of voigt 
-sigma = 1.0
-gamma = 0.2
+#parameters for the voigt 
+sigma = 0.8
+gamma = 0.1
 
-x = np.linspace(-10, 10, 1000)
 
-y_noise = noise(x,-6,0.1,0.1)
-y_noise1 = noise(x,4,0.05,0.5)
+# values to calculate voigt function
+x = np.linspace(-20, 20, 1000)
 
+
+# noise
+
+y_noise = noise(x,-1,0.1,0.1)
+y_noise1 = noise(x,1,0.05,0.2)
+y_noise2 = noise(x,3,0.1,0.2)
 
 axes[1].plot(x,y_noise, color="pink")
 axes[1].plot(x,y_noise1, color="pink")
+axes[1].plot(x,y_noise2, color="pink")
 axes[1].set_title("Noise")
 
-
-colors = ['blue', 'green', 'yellow', 'red','pink','magenta','purple','gray','black']
-
+# for shifting 
 centers = []
 
-for shift in range(0,1000,1):
+shift_values =  np.arange(-np.pi,np.pi,0.1)
+
+shift_values = np.sin(shift_values)
+
+for shift in shift_values:
     
     y = voigt_profile(x - shift, sigma, gamma)
 
-    y_final = y +y_noise +y_noise1
+    y_final = y +y_noise +y_noise1 +y_noise2
 
     x_final_max, y_final_max = cal.find_max(x,y_final)
     
     x_final_max_half_min, x_final_max_half_max,x_final_max_half,y_final_max_half = cal.find_half(x,y_final,y_final_max)
     
  
-    #axes[0].plot(x,y_final, color=color)
-    #axes[0].set_title("Voigt")
+    axes[0].plot(x,y_final, color='green')
+    axes[0].set_title("Voigt")
     #axes[0].axvline(x_final_max,color=color)
     #axes[0].axvline(x_final_max_half_min,ls='dashed',color=color)
     #axes[0].axvline(x_final_max_half_max,ls='dashed',color=color)
-    #axes[0].axvline(x_final_max_half,ls='dotted',color=color)
+    axes[0].axvline(x_final_max_half,ls='dotted',color='red')
 
    
     centers.append(x_final_max_half)
     
 #-----------------------------------------------------------------------------
 with open("output.txt", "w") as file:
+    file.write(f"t,value\n")
     for index,item in enumerate(centers):
-        file.write(f"{index},{item}\n")
+        file.write(f"{shift_values[index]},{item}\n")
 #------------------------------------------------------------------------------
 
 plt.show()
 
-#-------------------------------------------------------------------------------
 
-y_final = y + y_noise1 + y_noise2
-
-x_final_max, y_final_max = cal.find_max(x,y_final)
-
-x_final_max_half, y_final_max_half = cal.find_half(x,y_final,y_final_max)
-
-print(x_final_max_half)
-
-x_h = (x_final_max_half[1] - x_final_max_half[0])/2 + x_final_max_half[0]
-
-axes[1,1].axvline(x_h,color='red')
 
 
 

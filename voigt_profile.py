@@ -2,23 +2,7 @@ import numpy as np
 from scipy.special import voigt_profile
 import matplotlib.pyplot as plt
 import calculations as cal
-#-------------------------------------------------------------------------
-def V(x, alpha, gamma):
-    """
-    Return the Voigt line shape at x with Lorentzian component HWHM gamma
-    and Gaussian component HWHM alpha.
 
-    """
-    sigma = alpha / np.sqrt(2 * np.log(2))
-
-    return (
-        np.real(wofz((x + 1j * gamma) / sigma / np.sqrt(2)))
-        / sigma
-        / np.sqrt(2 * np.pi)
-    )
-
-#This snippet of code is from htt'ps://scipython.com/books/book2/chapter-8-scipy/examples/the-voigt-profile/
-#I used this code for the voigt profile modeling. It models the "perfect spectral line" and I will later in this program be adding 'noise' (in the correct context: telluric lines or contamination.
 #--------------------------------------------------------------------------
 
 def noise(x,peak_location,peak_height,peak_width):
@@ -29,14 +13,14 @@ def noise(x,peak_location,peak_height,peak_width):
 #For subplots
 figure, axes = plt.subplots(1,2)
 
-for ax in axes.flat:
-    ax.set_ylim(0, 0.5)
-    ax.set_xlim(-20,20)
+#for ax in axes.flat:
+    #ax.set_ylim(0, 0.5)
+    #ax.set_xlim(300,400)
 
     
 #parameters for the voigt 
-sigma = 0.8
-gamma = 0.1
+sigma = 0.5
+gamma = 0.3
 
 
 # values to calculate voigt function
@@ -57,14 +41,19 @@ axes[1].set_title("Noise")
 # for shifting 
 centers = []
 
-shift_values =  np.arange(-np.pi,np.pi,0.1)
-
+shift_values = np.arange(-np.pi,np.pi*3,0.2)
 shift_values = np.sin(shift_values)
+
+center_wavelength = 374.55
+
+shift_values = shift_values + center_wavelength
+
+x = x + center_wavelength
 
 for shift in shift_values:
     
-    y = voigt_profile(x - shift, sigma, gamma)
-
+    y = voigt_profile( x - shift, sigma, gamma)
+ 
     y_final = y +y_noise +y_noise1 +y_noise2
 
     x_final_max, y_final_max = cal.find_max(x,y_final)
@@ -86,7 +75,7 @@ for shift in shift_values:
 with open("output.txt", "w") as file:
     file.write(f"t,value\n")
     for index,item in enumerate(centers):
-        file.write(f"{shift_values[index]},{item}\n")
+        file.write(f"{index},{item}\n")
 #------------------------------------------------------------------------------
 
 plt.show()

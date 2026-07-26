@@ -4,31 +4,27 @@ import matplotlib.pyplot as plt
 import calculations as cal
 
 #--------------------------------------------------------------------------
-
+#This code is the 'backbone' of everything. In this code you are able to alter the 'noise' lines, which represent telluric contamination. Just look at the function to see how you can alter the noise, such as it's location and amplitude(height) But you must run this code in order to get the final graphs. Running this code will spit out a bunch of data, which the file "output_graph.py" will take this data and then graph it, after you run the command in a terminal. That graph just shows you the center point of the voigt profile, with or without contamination over time. (You must change the code if you want more contamination or less, or none at all!)
+#---------------------------------------------------------------------------
 def noise(x,peak_location,peak_height,peak_width):
     
     return peak_height * np.exp(-0.5 * ((x - peak_location) / peak_width) ** 2)
 
-
-#For subplots
+#for subplots
 figure, axes = plt.subplots(1,2)
 
 #for ax in axes.flat:
     #ax.set_ylim(0, 0.5)
     #ax.set_xlim(300,400)
-
     
 #parameters for the voigt 
 sigma = 0.5
 gamma = 0.3
 
-
 # values to calculate voigt function
 x = np.linspace(-20, 20, 1000)
 
-
-# noise
-
+#noise
 y_noise = noise(x,-1,0.1,0.1)
 y_noise1 = noise(x,1,0.05,0.2)
 y_noise2 = noise(x,3,0.1,0.2)
@@ -38,7 +34,7 @@ axes[1].plot(x,y_noise1, color="pink")
 axes[1].plot(x,y_noise2, color="pink")
 axes[1].set_title("Noise")
 
-# for shifting 
+#for shifting 
 centers = []
 
 shift_values = np.arange(-np.pi,np.pi*3,0.2)
@@ -72,6 +68,7 @@ for shift in shift_values:
     centers.append(x_final_max_half)
     
 #-----------------------------------------------------------------------------
+#This where the data is spit out, to get the most up-to-date output graph of the data, you MUST run this file in a terminal. 
 with open("output.txt", "w") as file:
     file.write(f"t,value\n")
     for index,item in enumerate(centers):

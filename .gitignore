@@ -1,4 +1,6 @@
 __pycache__/
-#output.txt#
+\#output.txt\#
 calculations.py~
 fwhm_calculations~
+.venv/
+gitignore

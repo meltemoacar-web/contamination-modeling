@@ -32,17 +32,17 @@ Use this to install each package (You must be in the vitural environment you cre
 ```
 pip install requests numpy scipy matplotlib pandas 
 ```
-# Running the model (WIP) 
-This will just be a simple breakdown of how each file relates to eachother, since when the project is finished, to see finished results you will only have to run the file that contains the final graphs. However, right now each step will be explained. 
+# Running this interactive model
+This model is pretty flexible, and is more on the interactive side if you choose it to be. There is only one file where you can edit the 'noise', representing the telluric contamination. In the file, check the comments to see how this is done if you would like to alter the location of the telluric lines, or the strength of them. Once done, if you chose to alter the telluric contamination, you will need to run the following command:
 ```
 python3 voigt_profile.py
 ```
-This command will run and pull up a graph showing the added telluric lines I made, and this file utilizes the "calculations.py" file as an import to do the FWHM calculations, which finds the center point of the voigt profile with added telluric lines as it shifts. The data generated from this file gets put into the "output.txt" file. You can skip running the voigt_profile.py command at all, since it just shows you the work behind getting the results. 
+After you run this command, ignore the graph if it shows. Since what running this file does is it creates the data and spits it out into another file. This data is the center point of the Voigt profile shifting across the axis, with the telluric conatmination being stationary. Now you can move onto running the following command and seeing what the center points over time look like graphed. To continue, run this command:
 ```
 python3 output_graph.py
 ```
-Running this command will give you a graphed verison of the generated data points (Though currently it has issues that are soon to be fixed) This graph represents how the center line of Voigt profile with telluric lines is shifting continuously.
+Now you are able to visually see how the telluric contamination is affecting the Voigt profile, it should be pretty obvious where. Now, after the center points have been graphed, we are able to calculate the radial velocity shift. The next file will be taking that data from the previous graph and calculating the radial velocity shift, which is then graphed. In order to have to calculations done and to see this graph, run this last command: 
 ```
 python3 radial_velocities.py
 ```
-This command will spit out a graph of the radial velocity shift of the output data from the Voigt profile calculations.
+Now you will have seen the visual representation of how telluric contamination impacts spectral lines. Based on location and intensity. You can mess around with with the telluric contamination to have some fun. Enjoy. 

@@ -17,11 +17,10 @@ def find_max(x,y):
         x_max.append(x[i])
 
 
-    print(f"x_max {x_max} y_max {y_max}")    
+    print(f"x_max {x_max[0]} y_max {y_max}\n")    
     return x_max[0],y_max
 
-#####################################################
-
+#-------------------------------------------------------------------------------
 def find_half(x,y,y_max):
 
     '''
@@ -35,6 +34,7 @@ def find_half(x,y,y_max):
     half_indices = []
 
     for index, yy in enumerate(y):
+        print(f"{yy}\n")
         #print(f" delta:{abs(yy - y_max_half)}")
         if abs(yy - y_max_half) <= 0.009:
             half_indices.append(index)
@@ -43,12 +43,14 @@ def find_half(x,y,y_max):
     for i in  half_indices:
         x_values.append(x[i])
 
+    print(x_values)    
     x_max_half_min = x_values[0]
     x_max_half_max = x_values[-1]     
         
-    print(f"x_max_half:{x_values} y_max_half:{y_max_half}")
+    print(f"x_max_half_min:{ x_max_half_min} x_max_half_max:{x_max_half_max}\n")
     
     x_max_half = (x_max_half_max - x_max_half_min)/2 + x_max_half_min  
     
     return x_max_half_min,x_max_half_max, x_max_half,  y_max_half
 
+#Just calculations that I used in the voigt_profile.py file. This is basically finding the center point of the graph each time as it shifts, which the method I am using the called the "Full-Width-Half-Maximum" method. 

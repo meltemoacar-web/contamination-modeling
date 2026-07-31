@@ -15,3 +15,8 @@ If you want to remove the build file but keep the pdf use this command:
 ```
 latexmk -c
 ```
+After this, you can open and view the paper with this command:
+```
+xdg-open main.pdf
+```
+

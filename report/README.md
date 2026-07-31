@@ -19,4 +19,4 @@ After this, you can open and view the paper with this command:
 ```
 xdg-open main.pdf
 ```
-
+My slides were done in LibreOffice Impress, in order to get the slides simply get the raw odp file and open it.
